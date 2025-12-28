@@ -1,2 +1,12 @@
 Install-Module -Name PnP.PowerShell -Scope CurrentUser -Force -AllowClobber
 Import-Module PnP.PowerShel
+# Sign in as a SharePoint admin (interactive)
+Connect-PnPOnline -Url "https://batchelortravel.sharepoint.com" -Interactive
+
+# Grant Read to the app on Owners site (replace <client-id>)
+Grant-PnPAzureADAppSitePermission -AppId "<client-id>" `
+  -Site "https://batchelortravel.sharepoint.com/sites/Owners" `
+  -Permissions Read
+
+# Verify the grant
+Get-PnPAzureADAppSitePermission -AppId "<client-id>"
