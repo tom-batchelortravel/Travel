@@ -1,1 +1,2 @@
-
+Install-Module -Name PnP.PowerShell -Scope CurrentUser -Force -AllowClobber
+Import-Module PnP.PowerShel
