@@ -1,0 +1,14 @@
+$tenantId    = "6f0a63b0-240f-4c5e-a5a3-93500d12a8f0"
+$clientId    = "57084650-c426-46a2-b60e-09b1cf9400be"
+$clientSecret= "Hju8Q~xIAwEfCDmIWG.7N86GmKAIAuaPO_qOQaEd"
+
+$tokenResponse = Invoke-RestMethod -Method Post `
+  -Uri "https://login.microsoftonline.com/$tenantId/oauth2/v2.0/token" `
+  -ContentType "application/x-www-form-urlencoded" `
+  -Body "client_id=$clientId&scope=https://graph.microsoft.com/.default&client_secret=$clientSecret&grant_type=client_credentials"
+
+$accessToken = $tokenResponse.access_token
+
+Invoke-RestMethod -Headers @{ Authorization = "Bearer $accessToken" } `
+  -Uri "https://graph.microsoft.com/v1.0/sites/batchelortravel.sharepoint.com:/sites/Owners:/drive/root/children" `
+  -Method Get | Select-Object name,webUrl
